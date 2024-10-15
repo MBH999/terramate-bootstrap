@@ -15,7 +15,7 @@ func main() {
   fmt.Println(regions)
 
   environments := userinput.Environments()
-  fmt.Println(environments)
+  fmt.Println(environments)  
 
   tmutils.TerramateCreate(regions, environments)
 }
