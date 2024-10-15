@@ -9,5 +9,9 @@ SRC=./main.go
 build: 
 	go build -o $(BIN_DIR)/$(BINARY_NAME) $(SRC)
 
+install:
+	sudo go build -o /usr/local/bin/$(BINARY_NAME) $(SRC)
+	
+
 clean:
 	rm -rf $(BIN_DIR)/*
