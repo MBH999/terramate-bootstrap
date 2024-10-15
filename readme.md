@@ -1,6 +1,8 @@
 ## Installation
 
-1. Close Repo
+---
+
+1. Clone Repo
 2. cd into folder
 3. Run make build
 
