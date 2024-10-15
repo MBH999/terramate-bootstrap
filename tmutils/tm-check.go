@@ -1,19 +1,17 @@
 package tmutils
 
 import (
-  "fmt"
-  "os/exec"
+	"fmt"
+	"os/exec"
 )
 
-func CheckVersion() (string, error) {  
- cmd := exec.Command("sh", "-c", "terramate --version")
+func CheckVersion() {
+	cmd := exec.Command("sh", "-c", "terramate --version")
 
-  output, err := cmd.Output()
+	output, err := cmd.Output()
+	if err != nil {
+		fmt.Println("Error: ", err)
+	}
 
-  if err != nil {
-    fmt.Println("Error: ", err)
-    return "", err
-  }
-
-  return string(output), nil
+	fmt.Println("Current Terramate Version: " + string(output))
 }

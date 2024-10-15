@@ -1,21 +1,38 @@
 package main
 
 import (
-  "terramate-bootstrap/tmutils"
-  "terramate-bootstrap/userinput"
-  "fmt"
+	"flag"
+	"fmt"
+	"terramate-bootstrap/tmutils"
+	"terramate-bootstrap/userinput"
 )
 
 func main() {
-  versionCheck, err := tmutils.CheckVersion()
-  fmt.Println(versionCheck, err)
+	tmutils.CheckVersion()
 
-  regions := userinput.Regions()
-  // regionList := strings.Split(regions, ",")
-  fmt.Println(regions)
+	caf_landing_zone := flag.Bool("clz", false, "Deploy CAF Landing Zone Structure.")
+	environments := flag.Bool("env", false, "Deploy Environment Stucture")
+	flag.Usage = func() {
+		fmt.Println("Usage terramate-bootstrap [options]")
+		fmt.Println("Options")
+		fmt.Println("   -clz          Deploy CAF Landing Zone Structure")
+		fmt.Println("   -env          Deploy Environments Structure")
+		fmt.Println("   -h, --help    Show help information.")
+	}
 
-  environments := userinput.Environments()
-  fmt.Println(environments)  
+	flag.Parse()
 
-  tmutils.TerramateCreate(regions, environments)
+	regions := userinput.Regions()
+
+	if *caf_landing_zone {
+		fmt.Println("Deploying CAF Landing Zone Structure")
+
+		tmutils.TerramateCreateClz(regions)
+	}
+
+	if *environments {
+		environments := userinput.Environments()
+
+		tmutils.TerramateCreateEnv(regions, environments)
+	}
 }
