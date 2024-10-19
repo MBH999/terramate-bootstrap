@@ -1,10 +1,8 @@
 # terramate-bootstrap
 
-Terramate-bootstrap is a basic GoLang tool to expediate stack creation & tagging.
+terramate-bootstrap is a GoLang based CLI tool designed to create terramate projects and stacks.
 
-This tool aims to speed up the process of creating stack structures.
-
-Run `terramate-bootstrap -h` to get a list of all commands available.
+It allows users to define their project structure and assign tags automatically to defined stacks.
 
 ## Installation
 
@@ -18,3 +16,38 @@ Within the make file, there are two options for creating the binary.
 `make build` : Build the binary into ./bin/terramate-bootstrap.
 
 `make install` : Build the binary to /usr/local/bin/terramate-bootstrap (to allow for global usage).
+
+## YAML Configuration
+
+The recommended method of configuration is using a yaml configuration file.
+
+The allows users to easily view the configuration that has been deployed. It also allows for re-usability of the configuration files for users that setup multiple platforms.
+
+### YAML Example
+
+```YAML
+---
+config:
+  environments:
+    prd:
+      tags:
+        - "test_tag_prd"
+    dev:
+      tags:
+        - "test_tag_dev"
+        - "test_tag_dev2"
+  regions:
+    uks:
+    ukw:
+  resource_types:
+    frontdoor:
+      tags:
+        - "frontdoor_tag"
+      exclude_environments:
+        - dev
+    virtual_machines:
+      tags:
+        - "virtual_machines_tag"
+      exclude_environments:
+        - prd
+```
