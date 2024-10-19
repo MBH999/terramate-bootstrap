@@ -3,15 +3,23 @@ package main
 import (
 	"flag"
 	"fmt"
+	"io"
+	"log"
+	"os"
 	"terramate-bootstrap/tmutils"
+	"terramate-bootstrap/types"
 	"terramate-bootstrap/userinput"
+
+	"gopkg.in/yaml.v3"
 )
 
 func main() {
 	tmutils.CheckVersion()
 
+	use_yaml_config := flag.String("config", "", "Path to a configuration file.")
 	caf_landing_zone := flag.Bool("clz", false, "Deploy CAF Landing Zone Structure.")
 	environments := flag.Bool("env", false, "Deploy Environment Stucture")
+
 	flag.Usage = func() {
 		fmt.Println("Usage terramate-bootstrap [options]")
 		fmt.Println("Options")
@@ -21,6 +29,29 @@ func main() {
 	}
 
 	flag.Parse()
+
+	if *use_yaml_config != "" {
+		file, err := os.Open(*use_yaml_config)
+		if err != nil {
+			log.Fatalf("Error opening configuration file: %v", err)
+		}
+		defer file.Close()
+
+		data, err := io.ReadAll(file)
+		if err != nil {
+			log.Fatalf("Error reading configuration file: %v", err)
+		}
+
+		var config types.Config
+		err = yaml.Unmarshal(data, &config)
+		if err != nil {
+			log.Fatalf("Error parsing configuration file %v", err)
+		}
+
+		// fmt.Printf("Parsed Config: %+v\n", config)
+
+		tmutils.CreateTMStructureFromConfig(config)
+	}
 
 	regions := userinput.Regions()
 
