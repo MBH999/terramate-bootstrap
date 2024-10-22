@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"os"
+	"terramate-bootstrap/tmimports"
 	"terramate-bootstrap/tmutils"
 	"terramate-bootstrap/types"
 	"terramate-bootstrap/userinput"
@@ -15,6 +16,10 @@ import (
 
 func main() {
 	tmutils.CheckVersion()
+
+	tmimports.ImportProvider()
+	tmimports.ImportTerraformBlock()
+	tmimports.ImportsFile()
 
 	use_yaml_config := flag.String("config", "", "Path to a configuration file.")
 	caf_landing_zone := flag.Bool("clz", false, "Deploy CAF Landing Zone Structure.")
