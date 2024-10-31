@@ -27,7 +27,12 @@ The allows users to easily view the configuration that has been deployed. It als
 
 ```YAML
 ---
-config:
+backend:
+  azurerm:
+    resource_group_name: "rg-test"
+    storage_account_name: "satfstatetest"
+    location: "uksouth"
+stacks:
   environments:
     prd:
       tags:
