@@ -1,30 +1,29 @@
 ---
-terramate:
-  backend:
-    azurerm:
-      resource_group_name: "rg-test"
-      storage_account_name: "satfstatetest"
-      location: "uksouth"
-  stacks:
-    environments:
-      prd:
-        tags:
-          - "test_tag_prd"
-      dev:
-        tags:
-          - "test_tag_dev"
-          - "test_tag_dev2"
-    regions:
-      uks:
-      ukw:
-    resource_types:
-      frontdoor:
-        tags:
-          - "frontdoor_tag"
-        exclude_environments:
-          - dev
-      virtual_machines:
-        tags:
-          - "virtual_machines_tag"
-        exclude_environments:
-          - prd
+backend:
+  azurerm:
+    resource_group_name: "rg-test"
+    storage_account_name: "satfstatetest"
+    location: "uksouth"
+stacks:
+  environments:
+    prd:
+      tags:
+        - "test_tag_prd"
+    dev:
+      tags:
+        - "test_tag_dev"
+        - "test_tag_dev2"
+  regions:
+    uks:
+    ukw:
+  resource_types:
+    frontdoor:
+      tags:
+        - "frontdoor_tag"
+      exclude_environments:
+        - dev
+    virtual_machines:
+      tags:
+        - "virtual_machines_tag"
+      exclude_environments:
+        - prd

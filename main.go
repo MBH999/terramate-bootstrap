@@ -4,27 +4,21 @@ import (
 	"flag"
 	"fmt"
 	"terramate-bootstrap/fileutils"
+	"terramate-bootstrap/tmglobals"
+	"terramate-bootstrap/tmimports"
+	"terramate-bootstrap/tmutils"
 )
 
 func main() {
-	// tmutils.CheckVersion()
-	//
-	// tmimports.ImportProvider()
-	// tmimports.ImportTerraformBlock()
-	// tmimports.ImportsFile()
-	//
-	// tmglobals.TMGlobals()
+	tmutils.CheckVersion()
 
 	use_yaml_config := flag.String("config", "", "Path to a configuration file.")
-	// caf_landing_zone := flag.Bool("clz", false, "Deploy CAF Landing Zone Structure.")
-	// environments := flag.Bool("env", false, "Deploy Environment Stucture")
 
 	flag.Usage = func() {
 		fmt.Println("Usage terramate-bootstrap [options]")
 		fmt.Println("Options")
-		fmt.Println("   -clz          Deploy CAF Landing Zone Structure")
-		fmt.Println("   -env          Deploy Environments Structure")
-		fmt.Println("   -h, --help    Show help information.")
+		fmt.Println("   -config=./path/to/config.yaml     Pass config file to create stacks")
+		fmt.Println("   -h, --help                        Show help information.")
 	}
 
 	flag.Parse()
@@ -35,40 +29,12 @@ func main() {
 			fmt.Println("error")
 		}
 
-		fmt.Printf("Parsed Config: %+v\n", config)
+		tmglobals.TMGlobals(config.Backend)
 
-		// file, err := os.Open(*use_yaml_config)
-		// if err != nil {
-		// 	log.Fatalf("Error opening configuration file: %v", err)
-		// }
-		// defer file.Close()
-		//
-		// data, err := io.ReadAll(file)
-		// if err != nil {
-		// 	log.Fatalf("Error reading configuration file: %v", err)
-		// }
-		//
-		// var config types.Config
-		// err = yaml.Unmarshal(data, &config)
-		// if err != nil {
-		// 	log.Fatalf("Error parsing configuration file %v", err)
-		// }
-		//
-		// fmt.Printf("Parsed Config: %+v\n", config)
+		tmimports.ImportProvider()
+		tmimports.ImportTerraformBlock()
+		tmimports.ImportsFile()
 
-		// tmutils.CreateTMStructureFromConfig(config)
+		tmutils.CreateTMStructureFromConfig(config.Stacks)
 	}
-
-	//
-	// if *caf_landing_zone {
-	// 	fmt.Println("Deploying CAF Landing Zone Structure")
-	//
-	// 	tmutils.TerramateCreateClz(regions)
-	// }
-	//
-	// if *environments {
-	// 	environments := userinput.Environments()
-	//
-	// 	tmutils.TerramateCreateEnv(regions, environments)
-	// }
 }

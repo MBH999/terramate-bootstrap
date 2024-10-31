@@ -4,16 +4,19 @@ import (
 	"embed"
 	"fmt"
 	"os"
+	"terramate-bootstrap/types"
 	"text/template"
 )
 
 //go:embed templates/state.globals.tm.hcl.tmpl
 var embeddedFiles embed.FS
 
-func TMGlobals() {
+func TMGlobals(backend types.BackendConfig) {
 	// Define the variables for the template
 	vars := map[string]interface{}{
-		"ResourceGroupName": "rg-test",
+		"ResourceGroupName":  backend.AzureRM.ResourceGroupName,
+		"StorageAccountName": backend.AzureRM.StorageAccountName,
+		"Location":           backend.AzureRM.Location,
 	}
 
 	// Read the embedded template file
