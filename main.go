@@ -35,7 +35,7 @@ func main() {
 			fmt.Println("error")
 		}
 
-		fmt.Printf("Parsed Config: %+v\n", config.Backend)
+		fmt.Printf("Parsed Config: %+v\n", config)
 
 		// file, err := os.Open(*use_yaml_config)
 		// if err != nil {
