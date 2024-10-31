@@ -9,17 +9,17 @@ import (
 	"terramate-bootstrap/types"
 )
 
-func CreateTMStructureFromConfig(config types.Config) {
+func CreateTMStructureFromConfig(config types.StacksConfig) {
 	fmt.Println("Creating terramate structure from config file.")
 
 	var paths []string
 
 	// Loop through regions object
-	for region, regionDetails := range config.Config.Regions {
+	for region, regionDetails := range config.Regions {
 		// Loop through environments object
-		for env, envDetails := range config.Config.Environments {
+		for env, envDetails := range config.Environments {
 			// Loop through resourceTypes object
-			for resource, resourceDetails := range config.Config.ResourceTypes {
+			for resource, resourceDetails := range config.ResourceTypes {
 
 				genericTags := []string{region, env, resource}
 
