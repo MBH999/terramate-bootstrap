@@ -1,4 +1,4 @@
-package tmglobals
+package tmtemplates
 
 import (
 	"embed"

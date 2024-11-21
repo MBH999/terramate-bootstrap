@@ -4,8 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"terramate-bootstrap/fileutils"
-	"terramate-bootstrap/tmglobals"
 	"terramate-bootstrap/tmimports"
+	"terramate-bootstrap/tmtemplates"
 	"terramate-bootstrap/tmutils"
 )
 
@@ -29,7 +29,7 @@ func main() {
 			fmt.Println("error")
 		}
 
-		tmglobals.TMGlobals(config.Backend)
+		tmtemplates.TMGlobals(config.Backend)
 
 		tmimports.ImportProvider()
 		tmimports.ImportTerraformBlock()
