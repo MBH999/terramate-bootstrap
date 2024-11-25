@@ -13,7 +13,6 @@ type BackendConfig struct {
 type AzureRMBackend struct {
 	ResourceGroupName  string `yaml:"resource_group_name"`
 	StorageAccountName string `yaml:"storage_account_name"`
-	Location           string `yaml:"location"`
 }
 
 //
@@ -24,9 +23,11 @@ type AzureRMBackend struct {
 // }
 
 type StacksConfig struct {
-	Environments  map[string]Environment  `yaml:"environments"`
-	Regions       map[string]Region       `yaml:"regions"`
-	ResourceTypes map[string]ResourceType `yaml:"resource_types,omitempty"`
+	Environments            map[string]Environment  `yaml:"environments"`
+	Regions                 map[string]Region       `yaml:"regions"`
+	ResourceTypes           map[string]ResourceType `yaml:"resource_types,omitempty"`
+	DeployEnvironmentStacks bool                    `yaml:"deploy_environment_stacks,omitempty"`
+	DeployRegionStacks      bool                    `yaml:"deploy_region_stacks,omitempty"`
 }
 
 type Environment struct {

@@ -16,7 +16,6 @@ func TMGlobals(backend types.BackendConfig) {
 	vars := map[string]interface{}{
 		"ResourceGroupName":  backend.AzureRM.ResourceGroupName,
 		"StorageAccountName": backend.AzureRM.StorageAccountName,
-		"Location":           backend.AzureRM.Location,
 	}
 
 	// Read the embedded template file

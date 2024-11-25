@@ -5,6 +5,8 @@ backend:
     storage_account_name: "satfstatetest"
     location: "uksouth"
 stacks:
+  deploy_environment_stacks: false
+  deploy_region_stacks: false
   environments:
     prd:
       tags:
