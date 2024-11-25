@@ -10,10 +10,13 @@ import (
 )
 
 func main() {
+	// check if terramate is installed
 	tmutils.CheckVersion()
 
+	// flag for config file
 	use_yaml_config := flag.String("config", "", "Path to a configuration file.")
 
+	// flag for help
 	flag.Usage = func() {
 		fmt.Println("Usage terramate-bootstrap [options]")
 		fmt.Println("Options")
@@ -21,8 +24,10 @@ func main() {
 		fmt.Println("   -h, --help                        Show help information.")
 	}
 
+	// parse flags
 	flag.Parse()
 
+	// process config file
 	if *use_yaml_config != "" {
 		config, err := fileutils.ParseConfigFile(use_yaml_config)
 		if err != nil {
@@ -35,6 +40,16 @@ func main() {
 		tmimports.ImportTerraformBlock()
 		tmimports.ImportsFile()
 
-		tmutils.CreateTMStructureFromConfig(config.Stacks)
+		fmt.Println("Creating terramate structure from config file.")
+
+		if !config.Stacks.DeployEnvironmentStacks {
+			tmutils.DeployEnvironmentStacks(config.Stacks)
+		}
+
+		if !config.Stacks.DeployRegionStacks {
+			tmutils.DeployRegionStacks(config.Stacks)
+		}
+
+		tmutils.DeployResourceStacks(config.Stacks)
 	}
 }
