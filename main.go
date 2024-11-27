@@ -42,11 +42,11 @@ func main() {
 
 		fmt.Println("Creating terramate structure from config file.")
 
-		if !config.Stacks.DeployEnvironmentStacks {
+		if config.Stacks.DeployEnvironmentStacks {
 			tmutils.DeployEnvironmentStacks(config.Stacks)
 		}
 
-		if !config.Stacks.DeployRegionStacks {
+		if config.Stacks.DeployRegionStacks {
 			tmutils.DeployRegionStacks(config.Stacks)
 		}
 
