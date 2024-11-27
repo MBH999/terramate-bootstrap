@@ -1,26 +1,26 @@
 package tmutils
 
 import (
-	"fmt"
 	"os/exec"
+
+	"github.com/charmbracelet/log"
 )
 
 func errorChecks(command string, path string) {
 	cmd := exec.Command("sh", "-c", command)
 
-	output, err := cmd.CombinedOutput()
+	_, err := cmd.CombinedOutput()
 
-	fmt.Printf("Creating Stack: %s\n", path)
+	log.Info("Creating Stack:", "path", path)
 
 	if err != nil {
 		if exitErr, ok := err.(*exec.ExitError); ok {
 			if exitErr.ExitCode() == 1 {
-				fmt.Println("Stack already exists! Continuing...")
+				log.Warn("Stack already exists! Continuing...")
 			} else {
-				fmt.Println("Error: ", err)
+				log.Error("Error: ", err)
 			}
 		}
 		return
 	}
-	fmt.Printf("Command Output: %v", string(output))
 }

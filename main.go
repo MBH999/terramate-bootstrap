@@ -41,7 +41,7 @@ func main() {
 		tmimports.ImportsFile()
 
 		fmt.Println("Creating terramate structure from config file.")
-
+		fmt.Print(config.Stacks)
 		if config.Stacks.DeployEnvironmentStacks {
 			tmutils.DeployEnvironmentStacks(config.Stacks)
 		}

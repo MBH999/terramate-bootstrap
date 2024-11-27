@@ -5,6 +5,8 @@ import (
 	"slices"
 	"strings"
 	"terramate-bootstrap/types"
+
+	"github.com/charmbracelet/log"
 )
 
 func DeployResourceStacks(config types.StacksConfig) {
@@ -15,29 +17,30 @@ func DeployResourceStacks(config types.StacksConfig) {
 	for env, envDetails := range config.Environments {
 		for region, regionDetails := range config.Regions {
 			for resource, resourceDetails := range config.ResourceTypes {
-				// define tags for stack
+				// Check if the current environment is excluded for this resource
+				if resourceDetails.ExcludeEnvironments != nil {
+					// Skip if the environment is in the excluded list
+					if slices.Contains(resourceDetails.ExcludeEnvironments, env) {
+						log.Errorf("Skipping %s for environment %s as it is excluded.", resource, env)
+						continue
+					}
+				}
+
+				// Define tags for the stack
 				tags := []string{env, region, resource}
 				tagsArray := slices.Concat(envDetails.Tags, regionDetails.Tags, resourceDetails.Tags, tags)
 				tagsString := strings.Join(tagsArray, ",")
 
-				if resourceDetails.ExcludeEnvironments == nil {
-					continue
-				}
+				// Create paths
+				resourceStackPath := "./stacks/" + env + "/" + region + "/" + resource
 
-				for _, excludedEnv := range resourceDetails.ExcludeEnvironments {
-					if excludedEnv == env {
-						continue
-					}
+				// Build the command
+				command := "terramate create --tags " + tagsString + " " + resourceStackPath
 
-					// create paths
-					resourceStackPath := "./stacks/" + env + "/" + region + "/" + resource
-
-					// build command
-					command := "terramate create --tags " + tagsString + " " + resourceStackPath
-
-					errorChecks(command, resourceStackPath)
-				}
+				// Execute the command with error checking
+				errorChecks(command, resourceStackPath)
 			}
 		}
 	}
+	fmt.Println("------------------------------------------------------------------------------")
 }
