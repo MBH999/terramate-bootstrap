@@ -26,4 +26,5 @@ func DeployEnvironmentStacks(config types.StacksConfig) {
 
 		errorChecks(command, envStackPath)
 	}
+	fmt.Println("------------------------------------------------------------------------------")
 }

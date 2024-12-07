@@ -28,4 +28,5 @@ func DeployRegionStacks(config types.StacksConfig) {
 			errorChecks(command, regionStackPath)
 		}
 	}
+	fmt.Println("------------------------------------------------------------------------------")
 }
