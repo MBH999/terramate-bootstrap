@@ -1,4 +1,4 @@
-package tmutils
+package tmcommands
 
 import (
 	"os/exec"
